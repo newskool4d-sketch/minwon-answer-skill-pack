@@ -18,6 +18,8 @@ references/source-manual-index.md
 - `references/deadlines-and-followup.md`
 - `references/privacy-and-disclosure.md`
 - `references/tools-and-output.md`
+- `references/local-context.md` (기관 특화 정보가 필요한 경우에만)
+- `examples/golden-cases.md` (초안 작성 전 문체·구조 기준)
 
 ## 기본 프롬프트
 

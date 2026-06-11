@@ -6,6 +6,8 @@
 2. `core/response-rules.md`
 3. `core/quality-checklist.md`
 4. 필요한 경우 `references/`의 관련 파일
+5. 초안 작성 전 `examples/golden-cases.md`로 문체·구조 기준 확인
+6. 기관 특화 정보가 필요한 경우에만 `references/local-context.md` 로드
 
 ## 작업 원칙
 

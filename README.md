@@ -1,5 +1,7 @@
 # 민원 답변 스킬팩
 
+> 버전: 1.1 / 최종 수정: 2026-06-11 (원천 매뉴얼 분석 기준일: 2026-05-02)
+
 민원, 고충민원, 제안, 예산낭비신고, 제도개선, 민원·정책 질의응답, 국민생각함, 선순환 이슈카드 관련 답변 초안 작성을 지원하는 범용 AI 작업 지침 패키지입니다.
 
 이 패키지는 Codex, Claude Code, Gemini CLI에서 모두 사용할 수 있도록 벤더 중립 핵심 지침과 도구별 래퍼를 분리합니다.
@@ -26,7 +28,8 @@ minwon-answer-skill-pack/
 │   ├── routing-and-jurisdiction.md
 │   ├── deadlines-and-followup.md
 │   ├── privacy-and-disclosure.md
-│   └── tools-and-output.md
+│   ├── tools-and-output.md
+│   └── local-context.md
 ├── codex/
 │   └── SKILL.md
 ├── claude-code/
@@ -36,8 +39,17 @@ minwon-answer-skill-pack/
 ├── tools/
 │   └── convert-output.md
 └── examples/
-    └── minwon-answer-template.md
+    ├── minwon-answer-template.md
+    └── golden-cases.md
 ```
+
+### 배포 구조 안내
+
+이 저장소는 원본(source of truth)입니다. 각 도구의 스킬 폴더에 배포할 때는 구조가 달라집니다.
+
+- Codex 배포(`~/.codex/skills/minwon-answer/`): `codex/SKILL.md`를 루트 `SKILL.md`로 이동하고 내부 상대경로의 `../`를 제거합니다. `claude-code/`, `gemini-cli/` 래퍼 폴더는 배포하지 않습니다.
+- Claude Code 배포(`~/.claude/skills/minwon-answer/`): Codex 배포본과 같은 구조를 사용합니다 (루트 `SKILL.md`의 frontmatter를 그대로 활용).
+- 따라서 배포본에서는 이 README의 폴더 구조도와 실제 구조가 다를 수 있습니다.
 
 ## 기본 실행 원칙
 
@@ -53,7 +65,8 @@ minwon-answer-skill-pack/
 - 법령검토: `korean-law-mcp`
 - 최신 검색: `insane-search`
 - 심층 조사: `deep-research`
-- HWPX 변환: `md_to_hwpx_com.py` 우선, 없으면 호환 변환 스크립트 사용
+- HWPX 변환: `to_hwpx_com.py` (`tools/convert-output.md` 참조)
+- 도구가 없는 환경의 대체 절차: `references/tools-and-output.md`의 "도구 부재 시 대체 절차" 참조
 
 ## GitHub 업로드 전 점검
 

@@ -13,6 +13,8 @@ Use this skill for Korean public complaint response work.
 2. Read `../core/response-rules.md`.
 3. Read `../core/quality-checklist.md`.
 4. Load only the relevant reference file from `../references/`.
+5. Before drafting, read `../examples/golden-cases.md` for tone and structure.
+6. Load `../references/local-context.md` only when institution-specific jurisdiction or local conventions matter.
 
 ## Required Behavior
 
@@ -23,6 +25,7 @@ Use this skill for Korean public complaint response work.
 - Use `korean-law-mcp` for legal review when available.
 - Use `insane-search` for current search when available.
 - Use `deep-research` for complex research when available.
+- When a tool is unavailable, follow the fallback table in `../references/tools-and-output.md`.
 - Produce Markdown by default.
 - Convert Markdown to HWPX in the same output folder when requested and a converter is available.
 

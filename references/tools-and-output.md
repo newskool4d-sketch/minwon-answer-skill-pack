@@ -45,19 +45,15 @@ YYYY-MM-DD_민원답변_발송본.md
 
 사용자가 HWPX를 요청하면 같은 폴더에 변환한다.
 
-1. `md_to_hwpx_com.py`를 찾는다.
-2. 없으면 `to_hwpx_com.py` 등 호환 변환기를 찾는다.
-3. 변환 후 HWPX 파일 존재 여부와 파일 크기를 확인한다.
-4. 변환 도구가 없거나 한글 COM 자동화가 불가하면 Markdown까지만 산출하고 사유를 알린다.
+변환기 경로·우선순위·실행 명령·변환 후 확인 절차는 `tools/convert-output.md`를 단일 출처로 따른다. 변환 도구가 없거나 한글 COM 자동화가 불가하면 Markdown까지만 산출하고 사유를 알린다.
 
-예상 명령:
+## 도구 부재 시 대체 절차
 
-```powershell
-python md_to_hwpx_com.py "답변초안.md" -o "출력폴더"
-```
+이 스킬팩은 Codex, Claude Code, Gemini CLI 공용이므로 위 도구가 없는 환경이 있을 수 있다.
 
-호환 도구:
-
-```powershell
-python to_hwpx_com.py "답변초안.md" -o "출력폴더"
-```
+| 도구 | 부재 시 대체 |
+|---|---|
+| `korean-law-mcp` | 국가법령정보센터(law.go.kr) 웹 검색으로 현행 조문 확인 후, 확인일과 출처 URL을 내부 검토표에 기록 |
+| `insane-search` | 사용 가능한 일반 웹 검색 도구로 대체. 검색 불가 환경이면 `[확인 필요: 최신 자료]`로 표시 |
+| `deep-research` | 일반 검색을 단계적으로 반복하되, 근거가 부족하면 단정하지 않고 `[확인 필요]` 처리 |
+| HWPX 변환기 | Markdown까지만 산출하고 변환 불가 사유를 알림 |
