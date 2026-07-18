@@ -1,6 +1,7 @@
 # 민원 답변 스킬팩
 
-> 버전: 1.1 / 최종 수정: 2026-06-11 (원천 매뉴얼 분석 기준일: 2026-05-02)
+> 버전: 1.2 / 최종 수정: 2026-07-18 (원천 매뉴얼 분석 기준일: 2026-05-02)
+> v1.2: 민원인 측 스킬(pon00050/minwon-draft) 방법론 분석 반영 — 인용 검증 프로토콜(`references/citation-verification.md`), 적대적 자기검토·질문별 대조 단계, 법규·사실·포섭 계층 규칙, 전제 확인형 민원 대응, 발송본 plain text 산출 추가
 
 민원, 고충민원, 제안, 예산낭비신고, 제도개선, 민원·정책 질의응답, 국민생각함, 선순환 이슈카드 관련 답변 초안 작성을 지원하는 범용 AI 작업 지침 패키지입니다.
 
@@ -28,6 +29,7 @@ minwon-answer-skill-pack/
 │   ├── routing-and-jurisdiction.md
 │   ├── deadlines-and-followup.md
 │   ├── privacy-and-disclosure.md
+│   ├── citation-verification.md
 │   ├── tools-and-output.md
 │   └── local-context.md
 ├── codex/

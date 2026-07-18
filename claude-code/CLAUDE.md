@@ -6,16 +6,19 @@
 2. `core/response-rules.md`
 3. `core/quality-checklist.md`
 4. 필요한 경우 `references/`의 관련 파일
-5. 초안 작성 전 `examples/golden-cases.md`로 문체·구조 기준 확인
-6. 기관 특화 정보가 필요한 경우에만 `references/local-context.md` 로드
+5. 법령·행정규칙·조례·판례를 인용하는 경우 `references/citation-verification.md` 필수
+6. 초안 작성 전 `examples/golden-cases.md`로 문체·구조 기준 확인
+7. 기관 특화 정보가 필요한 경우에만 `references/local-context.md` 로드
 
 ## 작업 원칙
 
 - 한국어로 답변한다.
 - 먼저 민원 유형을 분류한다.
 - 소관, 이송, 다부처, 협조, 보완요청, 처리기간, 개인정보, 법령근거를 확인한다.
-- 근거 없는 사실은 단정하지 않고 `[확인 필요: 항목]`으로 표시한다.
-- 기본 산출물은 Markdown으로 작성한다.
+- 근거 없는 사실은 단정하지 않고 `[확인 필요: 항목]`으로, 낮은 위험의 가정은 `[가정: …]`으로 표시한다.
+- 인용하는 모든 조문은 `references/citation-verification.md` 절차로 검증하고 상태 태그를 남긴다. ⚠️ 미검증 인용이 남은 발송본은 확정하지 않는다.
+- 발송 전 적대적 자기검토(workflow 6단계: 질문별 대조·회피성·절차 하자 점검)를 수행한다.
+- 기본 산출물은 Markdown으로 작성하고, 발송본은 답변란 붙여넣기용 서식 없는 텍스트 블록(글자수 보고 포함)도 제공한다.
 - HWPX가 필요하면 `tools/convert-output.md`에 따라 변환한다.
 
 ## Claude Code 사용 팁
