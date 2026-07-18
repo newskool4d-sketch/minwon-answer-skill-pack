@@ -1,0 +1,63 @@
+{
+  "expectations": [
+    {
+      "text": "국민신문고 답변란에 붙여넣을 수 있는 서식 없는 발송본이 제공된다(발송본 텍스트에 #·**·표 등 Markdown 기호 미포함)",
+      "passed": true,
+      "evidence": "발송본 파일 본문(\"아래 본문을 국민신문고 답변란에 그대로 붙여넣어 사용\" 이하)이 서식 없는 텍스트. Python 검사: 본문에 #·**·|·백틱·불릿 0건."
+    },
+    {
+      "text": "발송본의 글자수가 보고된다",
+      "passed": false,
+      "evidence": "Python 검사: 발송본·검토표 두 파일 모두 '글자수' 문자열 0건 — 글자수 보고 자체가 없음."
+    },
+    {
+      "text": "내부 검토 문서와 대민 발송본이 구분되어 산출된다",
+      "passed": true,
+      "evidence": "민원검토표(\"내부 검토용이며 대민 발송 금지\" 명시)와 민원답변_발송본 2개 파일로 분리 산출."
+    },
+    {
+      "text": "인용 검증표(법령·조문/시행일자/상태 형식)가 내부 문서에 포함된다",
+      "passed": true,
+      "evidence": "검토표 §3 '법령 확인 내역' 표: 근거(조문)/확인 내용/상태 3열, 상태에 \"현행 (시행 2026-03-01)\" 등 시행일자 병기 — 조문·시행일자·상태 요소 충족."
+    },
+    {
+      "text": "발송본에 [확인 필요] 표시·내부 판단 메모가 없다",
+      "passed": true,
+      "evidence": "Python 검사: 발송본 본문에 '[확인 필요'·'[가정' 0건, 내부 판단 메모 없음. [확인 필요]는 검토표 §6에만 존재(정상)."
+    },
+    {
+      "text": "결론(수용 곤란)이 발송본 앞부분에 제시된다",
+      "passed": true,
+      "evidence": "'2. 검토 결과' 첫 문장(민원 요지 직후): \"검토 결과, 요청하신 재채점 및 성적 정정은 수용하기 어려움을 알려드립니다.\""
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 1,
+    "total": 6,
+    "pass_rate": 0.83
+  },
+  "timing": {
+    "executor_duration_seconds": 339.5,
+    "total_tokens": 115786
+  },
+  "claims": [
+    {
+      "claim": "korean-law-mcp로 법령 확인(확인일 2026-07-18)",
+      "type": "process",
+      "verified": false,
+      "evidence": "transcript 미제공으로 검증 불가. 시행일자 표기는 문서 내 상호 일관."
+    },
+    {
+      "claim": "발송본 붙여넣기 시 글자수 상한 적합 여부",
+      "type": "quality",
+      "verified": false,
+      "evidence": "글자수 미보고로 판단 불가 — Python 계측 결과 본문은 공백 포함 약 1,707자(개행 제외)."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "발송본 분리·플레인 텍스트는 충족했으나 글자수 보고 누락이 유일한 실패."
+  },
+  "grading_notes": "실행 transcript·metrics.json 미제공 — outputs 폴더 산출물만으로 채점. 프로그램 검사는 scratchpad/verify_outputs.py 결과 기준."
+}
