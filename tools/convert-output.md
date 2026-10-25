@@ -15,7 +15,7 @@
 ## 현재 확인된 변환기
 
 ```text
-C:\Users\홍주형\.claude\to_hwpx_com.py
+%USERPROFILE%\.claude\to_hwpx_com.py
 ```
 
 (확인일: 2026-06-11) 이 도구는 `.md`, `.txt`, `.docx`, `.html`, `.csv`, `.xlsx`, `.pdf` 입력을 감지하여 HWPX로 변환하며 `-o` 출력 폴더 옵션을 지원한다. 다른 PC에서는 경로가 다를 수 있으므로 실행 전 존재 여부를 확인한다.
@@ -23,13 +23,13 @@ C:\Users\홍주형\.claude\to_hwpx_com.py
 ## 실행 예시
 
 ```powershell
-python "C:\Users\홍주형\.claude\to_hwpx_com.py" "답변초안.md" -o "출력폴더"
+python "$env:USERPROFILE\.claude\to_hwpx_com.py" "답변초안.md" -o "출력폴더"
 ```
 
 공문 형식 답변(끝 표시 필요)인 경우:
 
 ```powershell
-python "C:\Users\홍주형\.claude\to_hwpx_com.py" "답변초안.md" -o "출력폴더" --insert-end-mark
+python "$env:USERPROFILE\.claude\to_hwpx_com.py" "답변초안.md" -o "출력폴더" --insert-end-mark
 ```
 
 ## 변환 후 확인

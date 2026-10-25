@@ -1,6 +1,9 @@
 # 민원 답변 스킬팩
 
-> 버전: 1.3 / 최종 수정: 2026-08-18 (원천 매뉴얼 분석 기준일: 2026-05-02)
+> 버전: 1.4.2 / 최종 수정: 2026-10-25 (원천 매뉴얼 분석 기준일: 2026-05-02)
+> v1.4.2: `scripts/sanitize.py`의 이모지 결합·이형 선택자 판정을 근사 범위에서 Unicode 17.0 공식 표(emoji-zwj-sequences·emoji-variation-sequences·StandardizedVariants)로 교체 — ZWJ 묶음은 공식 시퀀스와 정확히 일치할 때만, VS1~3은 통합 한자의 공식 쌍일 때만 보존하고 한자 외 표준 이형 표기는 경고와 함께 제거, Python 유니코드 데이터 버전과 무관하게 Emoji 17 시퀀스 인식. 배포 저장소 안내·`tools/convert-output.md` 경로 표기 정리
+> v1.4.1: 처리기간 연장 요약을 현행 시행령 제21조로 갱신(제4항 준용 문언은 해석 사항으로 표시), 행정심판 청구절차·관할 위원회 근거(행정심판법 제6·23조, `references/local-context.md`), 국민제안 요건 비해당 건의 보완·종결 처리와 불채택 재심사·반복 제안 기준(「국민 제안 규정」 제6·10·12조, `references/complaint-types.md`), `scripts/sanitize.py` 단독 CR 줄바꿈 처리·정상 이모지 시퀀스(이모지 사이 ZWJ, RGI 하위 지역 깃발 3종) 보존과 보존 건수 보고, 이형 선택자 기반 제한(VS15·16은 이모지·키캡, VS1~3은 통합 한자 뒤 1개), 기본 무시 가능 문자(한글 채움 U+115F·1160, 몽골 자유 이형 선택자 등) 제거, 오류 줄 번호 기준 통일, 회귀 테스트 보강
+> v1.4: 거부 답변의 구제절차 분기·반복민원 종결 요건(`core/response-rules.md`), 적용 버전 확인과 인용 상태·확인 방법 분리(`references/citation-verification.md`), 발송 기준 통일(`검토용 초안` 표시)과 템플릿·골든 예시 정합화, 정당한 요구와 AI 조작 시도 구분(`core/workflow.md`), `scripts/sanitize.py` 줄 구분 보존·디코딩 실패 차단·종료 코드 정리와 회귀 테스트(`tests/test_sanitize.py`)
 > v1.3: 「외부 입력 안전 처리」 반영 — 민원 본문·첨부를 비신뢰 입력으로 취급하는 원칙(`SKILL.md`), 0단계 원문 정제 절차·`scripts/sanitize.py`(`core/workflow.md`), 「⚠️ 외부 입력 안전 처리 알림」 블록 출력 규칙, 검토 체크리스트 [차단] 2개 추가, README 사용 시 유의사항 신설
 > v1.2: 민원인 측 스킬(pon00050/minwon-draft) 방법론 분석 반영 — 인용 검증 프로토콜(`references/citation-verification.md`), 적대적 자기검토·질문별 대조 단계, 법규·사실·포섭 계층 규칙, 전제 확인형 민원 대응, 발송본 plain text 산출 추가
 
@@ -41,20 +44,23 @@ minwon-answer-skill-pack/
 │   └── GEMINI.md
 ├── scripts/
 │   └── sanitize.py
+├── tests/
+│   └── test_sanitize.py
 ├── tools/
 │   └── convert-output.md
-└── examples/
-    ├── minwon-answer-template.md
-    └── golden-cases.md
+├── examples/
+│   ├── minwon-answer-template.md
+│   └── golden-cases.md
+└── evals/            # 배포 저장소에만 있는 평가 기록
 ```
 
-### 배포 구조 안내
+### 정본과 배포 구조 안내
 
-이 저장소는 원본(source of truth)입니다. 각 도구의 스킬 폴더에 배포할 때는 구조가 달라집니다.
+내용의 정본은 Claude Code 스킬(`~/.claude/skills/minwon-answer/`)이며, 이 저장소(`minwon-answer-skill-pack`)는 여러 도구에서 쓰도록 묶은 벤더 중립 배포본입니다. 변경은 정본에서 먼저 하고, 공통 파일(`core/`·`references/`·`examples/`·`scripts/`·`tests/`·`tools/`·README)은 그대로 반영합니다.
 
-- Codex 배포(`~/.codex/skills/minwon-answer/`): `codex/SKILL.md`를 루트 `SKILL.md`로 이동하고 내부 상대경로의 `../`를 제거합니다. `claude-code/`, `gemini-cli/` 래퍼 폴더는 배포하지 않습니다.
-- Claude Code 배포(`~/.claude/skills/minwon-answer/`): Codex 배포본과 같은 구조를 사용합니다 (루트 `SKILL.md`의 frontmatter를 그대로 활용).
-- 따라서 배포본에서는 이 README의 폴더 구조도와 실제 구조가 다를 수 있습니다.
+- `codex/SKILL.md`: 정본 `SKILL.md`에서 description(영문), 정본 안내 문구, 상대경로 앞 `../`만 다릅니다. 도구 스킬 폴더에 배포할 때는 루트 `SKILL.md`로 옮기고 `../`를 제거합니다.
+- `claude-code/`, `gemini-cli/` 래퍼와 `evals/`는 배포 저장소에만 있습니다.
+- 따라서 도구별 배포본에서는 이 README의 폴더 구조도와 실제 구조가 다를 수 있습니다.
 
 ## 기본 실행 원칙
 
